@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .class1 {
+            color: red;
+        }
+
+        .class2 {
+            color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="h1">原生JS对元素的Attribute进行操作（添加、删除、替换）</h1>
+    <input type="button" value="add Attr" id="addBtn">
+    <input type="button" value="remove Attr" id="removeBtn">
+    <input type="button" value="replace Attr" id="replaceBtn">
+
+    <script src="./base.js"></script>
+    <script>
+        function addAttr(elem, attr, val) {
+            let name = elem.getAttribute(attr),
+                hasVal = name ? name.indexOf(val) + 1 ? 0 : 1 : 0;
+
+            if (hasVal) {
+                name = name.concat(' ' + val);
+                elem.setAttribute(attr, name);
+            }else {
+                elem.setAttribute(attr, val);
+            }
+        }
+
+        function removeAttr(elem, attr, val) {
+           
+        }
+
+        function replaceAttr(elem, attr, val) {
+            
+        }
+
+        let h1 = document.getElementById('h1'),
+            addBtn = document.getElementById('addBtn'),
+            removeBtn = document.getElementById('removeBtn'),
+            replaceBtn = document.getElementById('replaceBtn');
+
+        addBtn.addEventListener('click', function(){
+            addAttr(h1, 'class', 'class1');
+        }, false);
+        
+        removeBtn.addEventListener('click', function(){
+            removeAttr(h1, 'class', 'class1');
+        }, false);
+
+        replaceBtn.addEventListener('click', function(){
+            replaceAttr(h1, 'class', 'class1');
+        }, false);
+    </script>
+</body>
+</html>
