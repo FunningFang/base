@@ -23,24 +23,53 @@
 
     <script src="./base.js"></script>
     <script>
+        /* 思路：判断当前元素是否有此属性名并且是否有要操作的键值，
+        情况1：有此属性名且有此键值，
+        情况2：有此属性名但没有此键值，
+        情况3：没有此属性名 */
+
+        //elem:element 对象; attr:attribute 属性名; val:value 要添加的键值;
         function addAttr(elem, attr, val) {
             let name = elem.getAttribute(attr),
-                hasVal = name ? name.indexOf(val) + 1 ? 0 : 1 : 0;
+                hasVal = name ? name.indexOf(val) + 1 ? 1 : 2 : 3;
 
-            if (hasVal) {
+            if (hasVal === 1) {//有此属性名且有此键值
+                console.log('已有此属性名且有此键值');
+                return false;
+            }else if (hasVal === 2) {//有此属性名但没有此键值
                 name = name.concat(' ' + val);
                 elem.setAttribute(attr, name);
-            }else {
+            }else if (hasVal === 3) {//没有此属性名
                 elem.setAttribute(attr, val);
             }
         }
 
+        //elem:element 对象; attr:attribute 属性名; val:value 要删除的键值;
         function removeAttr(elem, attr, val) {
-           
+            let name = elem.getAttribute(attr),
+                hasVal = name ? name.indexOf(val) + 1 ? 1 : 0 : 0;
+
+            if (hasVal) {//有此属性名且有此键值
+                name = name.replace(val, '');
+                elem.setAttribute(attr, name);
+            } else {
+                console.log('没有此属性名或没有此键值')
+                return false;
+            }
         }
 
-        function replaceAttr(elem, attr, val) {
-            
+        //elem:element 对象; attr:attribute 属性名; val1:value 被替换的键值; val2:value 要替换的键值;
+        function replaceAttr(elem, attr, val1, val2) {
+            let name = elem.getAttribute(attr),
+                hasVal1 = name ? name.indexOf(val1) + 1 ? 1 : 0 : 0,
+                hasVal2 = hasVal1 ? name.indexOf(val2) + 1 ? 0 : 1 : 0;
+
+            if(hasVal2) {//有替换的键值但无要被替换的键值
+                name = name.replace(val1, val2);
+                elem.setAttribute(attr, name);
+            } else {
+                return false;
+            }
         }
 
         let h1 = document.getElementById('h1'),
@@ -57,7 +86,7 @@
         }, false);
 
         replaceBtn.addEventListener('click', function(){
-            replaceAttr(h1, 'class', 'class1');
+            replaceAttr(h1, 'class', 'class1', 'class2');
         }, false);
     </script>
 </body>

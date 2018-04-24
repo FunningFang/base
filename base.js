@@ -1,5 +1,37 @@
-let addListener;
+function addAttr(elem, attr, val) {
+    let name = elem.getAttribute(attr),
+        hasVal = name ? name.indexOf(val) + 1 ? 1 : 2 : 3;
+    if (hasVal === 1) {
+        console.log('已有此属性名且有此键值');
+        return false;
+    }else if (hasVal === 2) {
+        name = name.concat(' ' + val);
+        elem.setAttribute(attr, name);
+    }else if (hasVal === 3) {
+        elem.setAttribute(attr, val);
+    }
+}
 
-addListener = window.addEventListener?
-function (type, fn) {document.addEventListener(type, fn, false)}:
-function (type, fn) {document.attachEvent('on'+type, fn)};
+function removeAttr(elem, attr, val) {
+    let name = elem.getAttribute(attr),
+        hasVal = name ? name.indexOf(val) + 1 ? 1 : 0 : 0;
+    if (hasVal) {
+        name = name.replace(val, '');
+        elem.setAttribute(attr, name);
+    } else {
+        console.log('没有此属性名或没有此键值')
+        return false;
+    }
+}
+
+function replaceAttr(elem, attr, val1, val2) {
+    let name = elem.getAttribute(attr),
+        hasVal1 = name ? name.indexOf(val1) + 1 ? 1 : 0 : 0,
+        hasVal2 = hasVal1 ? name.indexOf(val2) + 1 ? 0 : 1 : 0;
+    if(hasVal2) {
+        name = name.replace(val1, val2);
+        elem.setAttribute(attr, name);
+    } else {
+        return false;
+    }
+}
