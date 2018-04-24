@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>获取兄弟元素</h1>
+    <ul>
+        <li>123</li>
+        <li id="li">456</li>
+        <li>789</li>
+    </ul>
+
+
+
+<script src="./base.js"></script>
+<script>
+    /* 思路：获取当前元素的父级的子元素，遍历并装入数组 */
+
+    function siblings(elem) {
+        let arr = [],
+            p = elem.parentNode.children,
+            len = p.length,
+            i = 0;
+
+        for (; i < len; i++) {
+            if (p[i] !== elem) {
+                arr.push(p[i]);
+            }
+        }
+
+        return arr;
+    }
+
+    let li = document.getElementById('li');
+
+    console.log(siblings(li));
+</script>
+</body>
+</html>

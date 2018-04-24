@@ -35,3 +35,16 @@ function replaceAttr(elem, attr, val1, val2) {
         return false;
     }
 }
+
+function siblings(elem) {
+    let arr = [],
+        p = elem.parentNode.children,
+        len = p.length,
+        i = 0;
+    for (; i < len; i++) {
+        if (p[i] !== elem) {
+            arr.push(p[i]);
+        }
+    }
+    return arr;
+}
