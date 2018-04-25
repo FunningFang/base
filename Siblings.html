@@ -35,9 +35,38 @@
         return arr;
     }
 
+
+    function nextSiblings( elem ) {
+        let arr = [],
+            n = elem.nextSibling;
+
+        for ( ; n; n = n.nextSibling ) {
+            if ( n.nodeType === 1) {
+                arr.push(n);
+            }
+        }
+        
+        return arr;
+    }
+
+    function prevSiblings(elem) {
+        let arr = [],
+            n = elem.previousSibling;
+
+        for ( ; n; n = n.previousSibling ) {
+            if ( n.nodeType === 1) {
+                arr.push(n);
+            }
+        }
+        
+        return arr;
+    }
+
     let li = document.getElementById('li');
 
+    console.log(prevSiblings(li));
     console.log(siblings(li));
+    console.log(nextSiblings(li));
 </script>
 </body>
 </html>
