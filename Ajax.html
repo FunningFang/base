@@ -47,11 +47,12 @@
         @returns {string} */
         function getParams(data) {
             let arr = [];
+
             for (let param in data){
-                arr.push(encodeURIComponent(param) + '=' +encodeURIComponent(data[param]));
+                arr.push(encodeURIComponent(param) + '=' + encodeURIComponent(data[param]));
             }
             
-            arr.push(('randomNumber=' + Math.random()).replace('.'));
+            arr.push(('randomNumber=' + Math.random()).replace('.', ''));
             
             return arr.join('&');
         }
@@ -76,15 +77,19 @@
                 }
             }
         };
+
         if (options.type == 'GET'){
-            xhr.open("GET",options.url + '?' + params ,options.async);
-            xhr.send(null)
+            /* 打开请求 */
+            xhr.open('GET', options.url + '?' + params, options.async);
+            
+            /* 发送请求参数 */
+            xhr.send(null);
         }else if (options.type == 'POST'){
             /* 打开请求 */
-            xhr.open('POST',options.url,options.async);
+            xhr.open('POST', options.url, options.async);
 
             /* POST请求设置请求头 */
-            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             
             /* 发送请求参数 */
             xhr.send(params);
