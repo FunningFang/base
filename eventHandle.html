@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="list">
+        <li id="item1" >item1</li>
+        <li id="item2" >item2</li>
+        <li id="item3" >item3</li>
+    </ul>
+    
+<script>
+    let list = document.getElementById('list'),
+        node = document.createElement("li");
+    node.id = "item4";
+    node.setAttribute("value", "cet4");
+    let textNode = document.createTextNode("item4");
+    node.appendChild(textNode);
+    list.insertBefore(node, null);
+
+    let item = list.children[3];
+
+    addEvent(item, 'click', clickHandle)
+
+    function clickHandle() {
+        console.log(item.id);
+        removeEvent(item, 'click', clickHandle);
+    }
+
+
+    function addEvent(elem, type, fn) {
+        window.addEventListener ? 
+        elem.addEventListener(type, fn, false) : 
+        elem.attachEvent('on'+type, fn);
+    }
+
+    function removeEvent(elem, type, fn) {
+        window.removeEventListener ? 
+        elem.removeEventListener(type, fn) : 
+        elem.detachEvent('on'+type, fn);
+    }
+</script>
+</body>
+</html>
