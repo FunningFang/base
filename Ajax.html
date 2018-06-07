@@ -8,7 +8,6 @@
 </head>
 <body>
     
-<script src="./base.js"></script>
 <script>
     /* 对封装好的ajax请求进行调用 */
     ajax({
@@ -39,8 +38,7 @@
         options.async = options.async ? true : false;
 
         /* 对需要传入的参数的处理 */
-        let params = getParams(options.data),
-            xhr;
+        let params = getParams(options.data);
         
         /*  对象参数的处理 
         @param data  
@@ -58,6 +56,8 @@
         }
 
         /* 创建一个 ajax请求 W3C标准和IE标准 */
+        let xhr;
+
         if (window.XMLHttpRequest){
             /* W3C标准 */
             xhr = new XMLHttpRequest();
@@ -67,10 +67,10 @@
         }
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4){
+            if (xhr.readyState === 4){
                 let status = xhr.status;
 
-                if ( (status >= 200 && status < 300) || xhr.status === 304 ) {
+                if ( (status >= 200 && status < 300) || status === 304 ) {
                     options.success && options.success(xhr.responseText,xhr.responseXML);
                 }else {
                     options.error && options.error(status);
@@ -78,13 +78,13 @@
             }
         };
 
-        if (options.type == 'GET'){
+        if (options.type === 'GET'){
             /* 打开请求 */
             xhr.open('GET', options.url + '?' + params, options.async);
             
             /* 发送请求参数 */
             xhr.send(null);
-        }else if (options.type == 'POST'){
+        }else if (options.type === 'POST'){
             /* 打开请求 */
             xhr.open('POST', options.url, options.async);
 

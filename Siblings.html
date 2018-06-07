@@ -14,36 +14,29 @@
         <li>789</li>
     </ul>
 
-
-
-<script src="./base.js"></script>
 <script>
     /* 思路：获取当前元素的父级的子元素，遍历并装入数组 */
 
     function siblings(elem) {
         let arr = [],
-            p = elem.parentNode.children,
-            len = p.length,
+            n = elem.parentNode.childNodes,
+            len = n.length,
             i = 0;
-
+        
         for (; i < len; i++) {
-            if (p[i] !== elem) {
-                arr.push(p[i]);
-            }
+            if (n[i] !== elem && n[i].nodeType === 1) arr.push(n[i]);
         }
 
         return arr;
     }
 
 
-    function nextSiblings( elem ) {
+    function nextSiblings(elem) {
         let arr = [],
             n = elem.nextSibling;
 
         for ( ; n; n = n.nextSibling ) {
-            if ( n.nodeType === 1) {
-                arr.push(n);
-            }
+            if ( n.nodeType === 1) arr.push(n);
         }
         
         return arr;
@@ -54,9 +47,7 @@
             n = elem.previousSibling;
 
         for ( ; n; n = n.previousSibling ) {
-            if ( n.nodeType === 1) {
-                arr.push(n);
-            }
+            if ( n.nodeType === 1) arr.push(n);
         }
         
         return arr;
