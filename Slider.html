@@ -98,8 +98,8 @@
             let slide = document.querySelector('.slide'),
                 list = document.querySelector('.slide_list'),
                 pic = list.querySelectorAll('div'),//此处div用时换成img
-                left = document.querySelector('.slide_arrow_left'),
-                right = document.querySelector('.slide_arrow_right'),
+                next = document.querySelector('.slide_arrow_left'),
+                prev = document.querySelector('.slide_arrow_right'),
                 page = document.querySelector('.slide_page'),
                 dot = page.querySelectorAll('span'),//页码
                 index = 0,//页码下标初始值
@@ -135,7 +135,7 @@
             
             function play() {
                 timer = setInterval(function () {
-                    right.onclick();
+                    prev.onclick();
                 }, 3000);
             }
 
@@ -143,7 +143,7 @@
                 clearInterval(timer);
             }
 
-            right.onclick = function () {
+            prev.onclick = function () {
                 if (index === (pic.length - 3)) {
                     index = 0;
                 } else {
@@ -156,7 +156,7 @@
                 
             }
 
-            left.onclick = function () {
+            next.onclick = function () {
                 if (index === 0) {
                     index = pic.length - 3;
                 } else {
