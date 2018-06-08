@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图1</title>
+    <style>
+        .slide {
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        .slide_list {
+            width: 4200px;
+            height: 400px;
+            overflow: hidden;
+            position: absolute;
+            left: -600px;
+        }
+        .slide_list div {
+            float: left;
+            width: 600px;
+            height: 400px;
+        }
+        .slide_page {
+            position: absolute;
+            left: 50%;
+            bottom: 10px;
+            transform: translateX(-50%);
+        }
+        .slide_page span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            background-color: aqua;
+            cursor: pointer;
+        }
+        .slide_page span.on {
+            color: white;
+            background-color: blueviolet;
+        }
+        .slide_arrow {
+            width: 50px;
+            height: 50px;
+            color: #000;
+            font-size: 30px;
+            line-height: 50px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            text-decoration: none;
+            display: none;
+        }
+        .slide_arrow_left {
+            left: 0;
+        }
+        .slide_arrow_right {
+            right: 0;
+        }
+        .slide:hover .slide_arrow {
+            display: block;
+            background: rgba(0,0,0,.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="slide_list">
+            <!-- 此处div用时换上相应img -->
+            <div style="background-color:pink">3</div>
+            <div style="background-color:red">1</div>
+            <div style="background-color:yellow">2</div>
+            <div style="background-color:pink">3</div>
+            <div style="background-color:red">1</div>
+        </div>
+
+        <div class="slide_page">
+            <span class="on">1</span>
+            <span>2</span>
+            <span>3</span>
+        </div>
+
+        <a href="javascript: void(0)" rel="nofollow external" class="slide_arrow slide_arrow_left"><</a>
+        <a href="javascript: void(0)" rel="nofollow external" class="slide_arrow slide_arrow_right">></a>
+    </div>
+
+    <script>
+        slider()
+
+        function slider() {
+            let slide = document.querySelector('.slide'),
+                list = document.querySelector('.slide_list'),
+                pic = list.querySelectorAll('div'),//此处div用时换成img
+                left = document.querySelector('.slide_arrow_left'),
+                right = document.querySelector('.slide_arrow_right'),
+                page = document.querySelector('.slide_page'),
+                dot = page.querySelectorAll('span'),//页码
+                index = 0,//页码下标初始值
+                moved = false,//是否在滑动
+                timer;
+            
+            function move(offset) {
+                moved = true;
+                let nowLeft = parseInt(list.offsetLeft) + offset,//当前的偏移量+下一次的偏移量=新的偏移量
+                    time = 300,//偏移总时间
+                    interval = 10,//偏移次数
+                    speed = offset / (time / interval);//每次偏移量
+
+                function go() {
+                    if ( (offset < 0 && parseInt(list.offsetLeft) > nowLeft) || (offset > 0 && parseInt(list.offsetLeft) < nowLeft) ) {
+                        //当向左或向右滑动时
+                        list.style.left = parseInt(list.offsetLeft) + speed + 'px';//每次偏移量
+                        setTimeout(go, interval);//10毫秒后再执行
+                    }else {
+                        moved = false;
+                        list.style.left = nowLeft + 'px';
+                        if ( index === 0 ) {
+                            list.style.left = -pic[0].offsetWidth + "px"
+                        }
+                        if ( index === (pic.length - 3) ) {
+                            list.style.left = -pic[0].offsetWidth * (pic.length - 2) + "px";
+                        }
+                        
+                    }
+                }
+                go();
+            }
+            
+            function play() {
+                timer = setInterval(function () {
+                    right.onclick();
+                }, 3000);
+            }
+
+            function stop() {
+                clearInterval(timer);
+            }
+
+            right.onclick = function () {
+                if (index === (pic.length - 3)) {
+                    index = 0;
+                } else {
+                    index += 1;
+                }
+                nowPage();
+                if (!moved) {
+                    move(-pic[0].offsetWidth);
+                }
+                
+            }
+
+            left.onclick = function () {
+                if (index === 0) {
+                    index = pic.length - 3;
+                } else {
+                    index -= 1;
+                }
+                nowPage();
+                if (!moved) {
+                    move(pic[0].offsetWidth);
+                }
+            }
+
+             function nowPage() {
+                /* 给当前页码添加class样式 */
+                for (let i = 0, len = dot.length; i < len; i++) {
+                    dot[i].className = '';
+                }
+                dot[index].className = 'on';
+            }
+
+            dot.forEach(function(elem, i) {
+                /* 点击页码，elem为当前元素，i为当前元素下标 */
+                elem.onclick = function () {
+                    if (this.classList.contains('on')) {
+                        return false;
+                    }
+                    list.style.left = ( -pic[0].offsetWidth * (i + 1) ) + 'px';
+                    index = i;
+                    nowPage();
+                }
+            })
+
+            slide.onmouseover = stop;
+            slide.onmouseout = play;
+            play();
+        }
+        
+        
+        
+    </script>
+</body>
+</html>
